@@ -16,21 +16,21 @@ const biografia: Book = {
   author: "Luiz",
 };
 
-// function addToLibrary(item: Book) {
-//   const response = `Adicionado o livro ${item.title} à sua biblioteca.`;
-//   console.log(response);
-// }
+function addToLibrary(item: Book) {
+  const response = `Adicionado o livro ${item.title} à sua biblioteca.`;
+  console.log(response);
+}
 
-// console.log(addToLibrary(biografia));
-
-// Terceiro Exercicio
-
-// const addMoneyToAccount = (money: number, message?: string): void => {
-//   console.log(!!message ? money + " dollars added to your account" : money);
-// };
-// addMoneyToAccount(10, "test");
+console.log(addToLibrary(biografia));
 
 // Terceiro Exercicio
+
+const addMoneyToAccount = (money: number, message?: string): void => {
+  console.log(!!message ? money + " dollars added to your account" : money);
+};
+addMoneyToAccount(10, "test");
+
+// Quarto Exercicio
 
 function passValue<Type>(value: Type): Type {
   return value;
@@ -38,5 +38,5 @@ function passValue<Type>(value: Type): Type {
 
 const passValueString = passValue<string>("valor");
 const passValueNumber = passValue<number>(10);
-// console.log(passValueString);
-// console.log(passValueNumber);
+console.log(passValueString);
+console.log(passValueNumber);

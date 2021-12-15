@@ -1,19 +1,32 @@
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import config from "./config";
-import { Movie } from "./models/movie.model";
+import { apiRouter } from "./routes/api.routes";
+import { extRouter } from "./routes/external.routes";
+
+dotenv.config();
+
+const ENV_VARS = {
+  port: process.env.PORT,
+  mongoURI: process.env.MONGO_URI,
+  TOKEN_SECRET: process.env.TOKEN_SECRET,
+};
 
 const app = express();
 
 app.use(express.json());
+app.use(apiRouter);
+app.use(extRouter);
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Servidor Express",
-  });
+app.listen(ENV_VARS.port, async () => {
+  console.log("Server Funcionando na porta: ", ENV_VARS.port);
+
+  if (ENV_VARS.mongoURI) {
+    mongoose.connect(ENV_VARS.mongoURI);
+    console.log("DB conectada");
+  } else {
+    console.log("Erro ao conectar a DB");
+  }
 });
 
-app.listen(config.PORT, async () => {
-  console.log("Server Funcionando na porta: ", config.PORT);
-  mongoose.connect(config.MONGO_URI);
-});
+export { ENV_VARS };
