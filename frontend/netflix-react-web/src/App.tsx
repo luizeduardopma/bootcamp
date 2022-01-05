@@ -19,12 +19,12 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route
-            path={"/"}
             element={
               <UserGuard>
                 <Home />
               </UserGuard>
             }
+            path={"/"}
           />
           <Route path={LoginPath} element={<Login />} />
           <Route
