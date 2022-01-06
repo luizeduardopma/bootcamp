@@ -1,4 +1,4 @@
-import react, { useState, useCallback, useEffect } from "react";
+import react, { useState, useCallback, useEffect, useMemo } from "react";
 import InputText from "../../../../components/inputs/input-text/input-text.component";
 import Button from "../../../../components/buttons/button/button.component";
 import * as yup from "yup";
@@ -7,7 +7,10 @@ import { ErrorDescription } from "./form.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../../store/user/user.slice";
 import { useLocation, useNavigate } from "react-router";
-import { isAuthenticated } from "../../../../store/user/user.selectors";
+import {
+  isAuthenticated,
+  isLoading,
+} from "../../../../store/user/user.selectors";
 import { HomePath } from "../../../home/home.types";
 
 const errorInitial = "";
@@ -19,6 +22,7 @@ export default function Form() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const isUserLoading = useSelector(isLoading);
   const isUserAuthenticated = useSelector(isAuthenticated);
 
   useEffect(() => {
@@ -27,6 +31,11 @@ export default function Form() {
       navigate(to);
     }
   }, [isUserAuthenticated]);
+
+  const buttonDescription = useMemo(
+    () => (isUserLoading ? "Carregando..." : "Entrar"),
+    [isUserLoading]
+  );
 
   const resetError = useCallback(() => {
     setError(errorInitial);
@@ -84,7 +93,7 @@ export default function Form() {
       />
       <ErrorDescription>{error}</ErrorDescription>
       <Button primary onClick={onSubmit}>
-        Entrar
+        {buttonDescription}
       </Button>
     </>
   );

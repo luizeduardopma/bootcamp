@@ -4,6 +4,10 @@ import reducers from "./user.reducers";
 
 const initialState: UserState = {
   data: null,
+  error: "",
+  settings: {
+    isLoading: false,
+  },
 };
 
 const userSlice = createSlice({
