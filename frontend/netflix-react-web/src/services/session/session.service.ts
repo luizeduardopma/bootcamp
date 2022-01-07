@@ -3,6 +3,8 @@ import {
   GetSession,
   PostSessionNew,
   PostSessionNewPayload,
+  PostUserNew,
+  PostUserNewPayload,
 } from "../user/user.types";
 import { Session } from "./session.types";
 
@@ -11,6 +13,9 @@ export function sessionService() {
     user: PostSessionNewPayload
   ): Promise<PostSessionNew> => axiosInstance.post("session/new", user);
 
+  const postUserNew = (user: PostUserNewPayload): Promise<PostUserNew> =>
+    axiosInstance.post("users/new", user);
+
   const getSession = (
     accessToken: Session["accessToken"]
   ): Promise<GetSession> =>
@@ -18,5 +23,5 @@ export function sessionService() {
       headers: { authorization: accessToken },
     });
 
-  return { postSessionNew, getSession };
+  return { postSessionNew, getSession, postUserNew };
 }

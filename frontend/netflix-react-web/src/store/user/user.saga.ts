@@ -30,6 +30,30 @@ function* watchLogin() {
   yield takeEvery("user/login", login);
 }
 
+export function* signUp(props: any) {
+  try {
+    yield put(userActions.setSettings({ isLoading: true }));
+    const { name, email, password } = props.payload;
+    const { data }: PostSessionNew = yield call(sessionService().postUserNew, {
+      name,
+      email,
+      password,
+    });
+    console.log(props, "props");
+    console.log(data, "data");
+  } catch (error) {
+    console.log(error);
+    //@ts-ignore
+    yield put(userActions.setError(error.response.data.message));
+  } finally {
+    yield put(userActions.setSettings({ isLoading: false }));
+  }
+}
+
+function* watchSignUp() {
+  yield takeEvery("user/signUp", signUp);
+}
+
 export function* loginByToken() {
   try {
     const accessToken = localStorage.getItem(AccessTokenStorageKey);
@@ -47,5 +71,5 @@ export function* loginByToken() {
 }
 
 export default function* userSaga() {
-  yield all([watchLogin(), loginByToken()]);
+  yield all([watchLogin(), watchSignUp(), loginByToken()]);
 }

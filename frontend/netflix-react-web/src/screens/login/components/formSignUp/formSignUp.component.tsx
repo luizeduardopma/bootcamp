@@ -2,7 +2,7 @@ import react, { useState, useCallback, useEffect, useMemo } from "react";
 import InputText from "../../../../components/inputs/input-text/input-text.component";
 import Button from "../../../../components/buttons/button/button.component";
 import * as yup from "yup";
-import { ErrorMessage } from "./form.types";
+import { ErrorMessage } from "../form/form.types";
 import { ErrorDescription } from "./form.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../../store/user/user.slice";
@@ -11,13 +11,12 @@ import {
   isAuthenticated,
   isLoading,
 } from "../../../../store/user/user.selectors";
-import { HomePath } from "../../../home/home.types";
 import store from "../../../../store/store/store";
 
 const errorInitial = "";
 
-export default function Form({ setIsloginPage }: any) {
-  const [data, setData] = useState({ email: "", password: "" });
+export default function FormSignUp({ setIsloginPage }: any) {
+  const [data, setData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState(errorInitial);
 
   const dispatch = useDispatch();
@@ -26,15 +25,8 @@ export default function Form({ setIsloginPage }: any) {
   const isUserLoading = useSelector(isLoading);
   const isUserAuthenticated = useSelector(isAuthenticated);
 
-  useEffect(() => {
-    if (isUserAuthenticated) {
-      const to = location.state?.from?.pathname || HomePath;
-      navigate(to);
-    }
-  }, [isUserAuthenticated]);
-
   const buttonDescription = useMemo(
-    () => (isUserLoading ? "Carregando..." : "Entrar"),
+    () => (isUserLoading ? "Carregando..." : "Criar Usuário"),
     [isUserLoading]
   );
 
@@ -53,6 +45,7 @@ export default function Form({ setIsloginPage }: any) {
 
   const validation = useCallback(async () => {
     const schema = yup.object().shape({
+      name: yup.string().required(ErrorMessage.Required),
       email: yup
         .string()
         .required(ErrorMessage.Required)
@@ -74,14 +67,21 @@ export default function Form({ setIsloginPage }: any) {
 
   const onSubmit = useCallback(async () => {
     if (await validation()) {
-      dispatch(userActions.login(data));
+      await dispatch(userActions.signUp(data));
       const newState = store.getState();
+      console.log(newState, "newState");
       setError(newState.user.error);
     }
   }, [validation, data]);
 
   return (
     <>
+      <InputText
+        type={"text"}
+        placeholder={"Nome"}
+        name={"name"}
+        onChange={handleChange}
+      />
       <InputText
         type={"text"}
         placeholder={"E-mail"}
@@ -103,10 +103,10 @@ export default function Form({ setIsloginPage }: any) {
         {buttonDescription}
       </Button>
       <a
-        onClick={() => setIsloginPage(false)}
+        onClick={() => setIsloginPage(true)}
         style={{ color: "red", cursor: "pointer" }}
       >
-        Criar Usuário
+        Voltar ao login
       </a>
     </>
   );

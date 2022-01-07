@@ -5,6 +5,12 @@ const Primary = css`
   background: ${(props) => props.theme.palette.core.primary};
 `;
 
+const Disabled = css`
+  color: ${(props) => props.theme.palette.typography.primary};
+  background: #c96b6b;
+  cursor: wait;
+`;
+
 const Hover = css`
   &:hover {
     background: ${(props) => props.theme.palette.core.primaryHover};
@@ -24,7 +30,8 @@ const Button = styled.a<any>`
   text-align: center;
 
   ${(props) => props.primary && Primary}
-  ${Hover}
+  ${(props) => props.disabled && Disabled}
+  ${(props) => !props.disabled && Hover}
 `;
 
 export default Button;
