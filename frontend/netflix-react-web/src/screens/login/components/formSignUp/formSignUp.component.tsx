@@ -10,8 +10,8 @@ import { useLocation, useNavigate } from "react-router";
 import {
   isAuthenticated,
   isLoading,
+  errorMessageRedux,
 } from "../../../../store/user/user.selectors";
-import store from "../../../../store/store/store";
 
 const errorInitial = "";
 
@@ -24,11 +24,17 @@ export default function FormSignUp({ setIsloginPage }: any) {
   const location = useLocation();
   const isUserLoading = useSelector(isLoading);
   const isUserAuthenticated = useSelector(isAuthenticated);
+  const errorMessageFromRedux = useSelector(errorMessageRedux);
 
   const buttonDescription = useMemo(
     () => (isUserLoading ? "Carregando..." : "Criar Usuário"),
     [isUserLoading]
   );
+  useEffect(() => {
+    if (errorMessageFromRedux !== "") {
+      setError(errorMessageFromRedux);
+    }
+  }, [errorMessageFromRedux, error]);
 
   const resetError = useCallback(() => {
     setError(errorInitial);
@@ -42,6 +48,10 @@ export default function FormSignUp({ setIsloginPage }: any) {
       })),
     [setData]
   );
+  const handleClick = () => {
+    errorMessageFromRedux !== "" && dispatch(userActions.setError(""));
+    setError("");
+  };
 
   const validation = useCallback(async () => {
     const schema = yup.object().shape({
@@ -68,9 +78,6 @@ export default function FormSignUp({ setIsloginPage }: any) {
   const onSubmit = useCallback(async () => {
     if (await validation()) {
       await dispatch(userActions.signUp(data));
-      const newState = store.getState();
-      console.log(newState, "newState");
-      setError(newState.user.error);
     }
   }, [validation, data]);
 
@@ -81,18 +88,21 @@ export default function FormSignUp({ setIsloginPage }: any) {
         placeholder={"Nome"}
         name={"name"}
         onChange={handleChange}
+        onClick={handleClick}
       />
       <InputText
         type={"text"}
         placeholder={"E-mail"}
         name={"email"}
         onChange={handleChange}
+        onClick={handleClick}
       />
       <InputText
         type={"password"}
         placeholder={"Senha"}
         name={"password"}
         onChange={handleChange}
+        onClick={handleClick}
       />
       <ErrorDescription>{error}</ErrorDescription>
       <Button

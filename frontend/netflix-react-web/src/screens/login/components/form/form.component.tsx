@@ -10,9 +10,9 @@ import { useLocation, useNavigate } from "react-router";
 import {
   isAuthenticated,
   isLoading,
+  errorMessageRedux,
 } from "../../../../store/user/user.selectors";
 import { HomePath } from "../../../home/home.types";
-import store from "../../../../store/store/store";
 
 const errorInitial = "";
 
@@ -25,6 +25,7 @@ export default function Form({ setIsloginPage }: any) {
   const location = useLocation();
   const isUserLoading = useSelector(isLoading);
   const isUserAuthenticated = useSelector(isAuthenticated);
+  const errorMessageFromRedux = useSelector(errorMessageRedux);
 
   useEffect(() => {
     if (isUserAuthenticated) {
@@ -32,6 +33,12 @@ export default function Form({ setIsloginPage }: any) {
       navigate(to);
     }
   }, [isUserAuthenticated]);
+
+  useEffect(() => {
+    if (errorMessageFromRedux !== "") {
+      setError(errorMessageFromRedux);
+    }
+  }, [errorMessageFromRedux, error]);
 
   const buttonDescription = useMemo(
     () => (isUserLoading ? "Carregando..." : "Entrar"),
@@ -50,6 +57,11 @@ export default function Form({ setIsloginPage }: any) {
       })),
     [setData]
   );
+  const handleClick = () => {
+    errorMessageFromRedux !== "" && dispatch(userActions.setError(""));
+
+    setError("");
+  };
 
   const validation = useCallback(async () => {
     const schema = yup.object().shape({
@@ -75,8 +87,6 @@ export default function Form({ setIsloginPage }: any) {
   const onSubmit = useCallback(async () => {
     if (await validation()) {
       dispatch(userActions.login(data));
-      const newState = store.getState();
-      setError(newState.user.error);
     }
   }, [validation, data]);
 
@@ -87,12 +97,14 @@ export default function Form({ setIsloginPage }: any) {
         placeholder={"E-mail"}
         name={"email"}
         onChange={handleChange}
+        onClick={handleClick}
       />
       <InputText
         type={"password"}
         placeholder={"Senha"}
         name={"password"}
         onChange={handleChange}
+        onClick={handleClick}
       />
       <ErrorDescription>{error}</ErrorDescription>
       <Button
