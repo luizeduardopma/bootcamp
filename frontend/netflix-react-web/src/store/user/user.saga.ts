@@ -64,6 +64,9 @@ export function* loginByToken() {
         data: { userId: id },
       }: GetSession = yield call(sessionService().getSession, accessToken);
       yield put(userActions.setData({ id }));
+      const { data } = yield call(userService().getMovies);
+      console.log(data, "datamovies");
+      yield put(userActions.setMovies(data));
     }
   } catch (error) {
     //@ts-ignore
