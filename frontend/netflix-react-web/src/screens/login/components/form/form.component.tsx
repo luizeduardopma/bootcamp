@@ -87,6 +87,7 @@ export default function Form({ setIsloginPage }: any) {
   const onSubmit = useCallback(async () => {
     if (await validation()) {
       dispatch(userActions.login(data));
+      dispatch(userActions.movies());
     }
   }, [validation, data]);
 

@@ -8,6 +8,15 @@ const initialState: UserState = {
   settings: {
     isLoading: false,
   },
+  movies: {
+    page: 0,
+    limit: 0,
+    previousPage: 0,
+    nextPage: 0,
+    total: 0,
+    totalPages: 0,
+    data: [],
+  },
 };
 
 const userSlice = createSlice({

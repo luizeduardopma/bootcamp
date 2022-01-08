@@ -28,3 +28,15 @@ type GetSessionData = {
 };
 
 export type GetSession = Response<GetSessionData>;
+
+type GetMoviesData = {
+  page: number;
+  limit: number;
+  previousPage: null | number;
+  nextPage: number;
+  total: number;
+  totalPages: number;
+  data: Array<Object>;
+};
+
+export type GetMovies = Response<GetMoviesData>;

@@ -1,5 +1,6 @@
 import { put, takeEvery, all, call } from "redux-saga/effects";
 import { sessionService } from "../../services/session/session.service";
+import { userService } from "../../services/user/user.service";
 import { GetSession, PostSessionNew } from "../../services/user/user.types";
 import { userActions } from "./user.slice";
 import { AccessTokenStorageKey } from "./user.types";
@@ -70,6 +71,23 @@ export function* loginByToken() {
   }
 }
 
+export function* getMoviesSaga() {
+  try {
+    console.log("chegou aqui");
+
+    const { data } = yield call(userService().getMovies);
+    console.log(data, "datamovies");
+    yield put(userActions.setMovies(data));
+  } catch (error) {
+    //@ts-ignore
+    yield put(userActions.setError(error.response.data.message));
+  }
+}
+
+function* watchGetMovies() {
+  yield takeEvery("user/movies", getMoviesSaga);
+}
+
 export default function* userSaga() {
-  yield all([watchLogin(), watchSignUp(), loginByToken()]);
+  yield all([watchGetMovies(), watchLogin(), watchSignUp(), loginByToken()]);
 }
