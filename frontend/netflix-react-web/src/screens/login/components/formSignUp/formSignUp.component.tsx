@@ -78,6 +78,7 @@ export default function FormSignUp({ setIsloginPage }: any) {
   const onSubmit = useCallback(async () => {
     if (await validation()) {
       await dispatch(userActions.signUp(data));
+      !isUserLoading && setIsloginPage(true);
     }
   }, [validation, data]);
 

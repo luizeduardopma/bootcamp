@@ -115,11 +115,12 @@ export default function Form({ setIsloginPage }: any) {
       >
         {buttonDescription}
       </Button>
+      <span style={{ color: "white" }}>Não tem uma conta? </span>
       <a
         onClick={() => setIsloginPage(false)}
-        style={{ color: "red", cursor: "pointer" }}
+        style={{ color: "red", cursor: "pointer", marginLeft: "8px" }}
       >
-        Criar Usuário
+        Cadastre-se
       </a>
     </>
   );

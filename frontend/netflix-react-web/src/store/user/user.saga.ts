@@ -19,6 +19,9 @@ export function* login(props: any) {
     localStorage.setItem(AccessTokenStorageKey, accessToken);
     yield put(userActions.setError(""));
     yield put(userActions.setData({ ...user }));
+    const { data: result } = yield call(userService().getList, accessToken);
+    console.log(result.result, "MyList");
+    yield put(userActions.setList(result.result));
   } catch (error) {
     //@ts-ignore
     yield put(userActions.setError(error.response.data.message));
@@ -67,6 +70,10 @@ export function* loginByToken() {
       const { data } = yield call(userService().getMovies);
       console.log(data, "datamovies");
       yield put(userActions.setMovies(data));
+
+      const { data: result } = yield call(userService().getList, accessToken);
+      console.log(result.result, "MyList");
+      yield put(userActions.setList(result.result));
     }
   } catch (error) {
     //@ts-ignore
@@ -91,6 +98,31 @@ function* watchGetMovies() {
   yield takeEvery("user/movies", getMoviesSaga);
 }
 
+export function* getListSaga() {
+  try {
+    console.log("chegou aqui");
+    const accessToken = localStorage.getItem(AccessTokenStorageKey);
+    if (accessToken) {
+      const { data } = yield call(userService().getList, accessToken);
+      console.log(data, "dataList");
+      yield put(userActions.setList(data.result));
+    }
+  } catch (error) {
+    //@ts-ignore
+    yield put(userActions.setError(error.response.data.message));
+  }
+}
+
+function* watchGetList() {
+  yield takeEvery("user/list", getListSaga);
+}
+
 export default function* userSaga() {
-  yield all([watchGetMovies(), watchLogin(), watchSignUp(), loginByToken()]);
+  yield all([
+    watchGetMovies(),
+    watchLogin(),
+    watchSignUp(),
+    watchGetList(),
+    loginByToken(),
+  ]);
 }

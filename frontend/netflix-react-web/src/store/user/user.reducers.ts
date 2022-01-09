@@ -3,12 +3,15 @@ import {
   UserAction,
   SetErrorAction,
   SetSettingsAction,
-  MoviesAcition,
+  MoviesAction,
+  ListAction,
 } from "./user.types";
 
 const login = (state: UserState, action: UserAction) => {};
 
 const movies = () => {};
+
+const list = () => {};
 
 const signUp = (state: UserState, action: UserAction) => {
   state.data = { ...state.data, ...action.payload };
@@ -16,8 +19,12 @@ const signUp = (state: UserState, action: UserAction) => {
 const setData = (state: UserState, action: UserAction) => {
   state.data = { ...state.data, ...action.payload };
 };
-const setMovies = (state: UserState, action: MoviesAcition) => {
+const setMovies = (state: UserState, action: MoviesAction) => {
   state.movies = action.payload;
+};
+
+const setList = (state: UserState, action: ListAction) => {
+  state.list = action.payload;
 };
 
 const setError = (state: UserState, action: SetErrorAction) => {
@@ -36,6 +43,8 @@ const reducers = {
   signUp,
   movies,
   setMovies,
+  list,
+  setList,
 };
 
 export default reducers;

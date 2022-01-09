@@ -40,3 +40,9 @@ type GetMoviesData = {
 };
 
 export type GetMovies = Response<GetMoviesData>;
+
+type GetListData = {
+  result: [Object];
+};
+
+export type GetList = Response<GetListData>;

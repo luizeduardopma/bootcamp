@@ -17,6 +17,7 @@ const initialState: UserState = {
     totalPages: 0,
     data: [],
   },
+  list: null || [Object],
 };
 
 const userSlice = createSlice({

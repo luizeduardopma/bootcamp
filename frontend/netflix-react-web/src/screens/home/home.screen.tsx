@@ -4,6 +4,7 @@ import { Container, Grid } from "@mui/material";
 import { GridNavbar } from "./home.styled";
 import Carousel from "./carousel/carousel.component";
 import Navbar from "./navbar/navbar.component";
+import MoviesList from "./list/list.component";
 
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
             <Grid item xs={12}>
               <Carousel />
             </Grid>
+            <h5 style={{ color: "white" }}>Minha lista</h5>
+            <MoviesList />
           </div>
         </Grid>
       </Container>

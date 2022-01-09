@@ -2,15 +2,8 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 type Anchor = "left";
@@ -19,7 +12,10 @@ export default function NavbarDrawer() {
   const [state, setState] = React.useState({
     left: false,
   });
-
+  const handleClick = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -52,6 +48,7 @@ export default function NavbarDrawer() {
         aria-label="menu"
         sx={{ mr: 2 }}
         style={{ fontSize: "12px" }}
+        onClick={handleClick}
       >
         <LogoutIcon
           style={{ minWidth: "35px", minHeight: "35px", marginRight: "10px" }}

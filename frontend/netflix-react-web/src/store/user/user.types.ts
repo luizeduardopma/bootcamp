@@ -19,6 +19,8 @@ export type Movies = {
   data: Array<Object>;
 };
 
+export type List = [Object];
+
 export type UserState = {
   data: User | null;
   error: string;
@@ -26,9 +28,11 @@ export type UserState = {
     isLoading: boolean;
   };
   movies: Movies;
+  list: null | [Object];
 };
 
 export type UserAction = Action<User>;
-export type MoviesAcition = Action<Movies>;
+export type MoviesAction = Action<Movies>;
+export type ListAction = Action<List>;
 export type SetErrorAction = Action<string>;
 export type SetSettingsAction = Action<UserState["settings"]>;

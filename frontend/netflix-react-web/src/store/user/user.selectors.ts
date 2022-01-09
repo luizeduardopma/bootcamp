@@ -6,3 +6,4 @@ export const isAuthenticated = (state: State) => {
 export const isLoading = (state: State) => state.user.settings.isLoading;
 export const errorMessageRedux = (state: State) => state.user.error;
 export const moviesBackend = (state: State) => state.user.movies;
+export const listBackend = (state: State) => state.user.list;
