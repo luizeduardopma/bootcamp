@@ -9,5 +9,17 @@ export function userService() {
       headers: { authorization: accessToken },
     });
 
-  return { getMovies, getList };
+  const addList = (
+    accessToken: Session["accessToken"],
+    movieId: string
+  ): Promise<GetList> =>
+    axiosInstance.post(
+      `list/add/${movieId}`,
+      {},
+      {
+        headers: { authorization: accessToken },
+      }
+    );
+
+  return { getMovies, getList, addList };
 }

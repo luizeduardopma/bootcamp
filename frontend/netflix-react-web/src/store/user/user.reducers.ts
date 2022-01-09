@@ -13,6 +13,8 @@ const movies = () => {};
 
 const list = () => {};
 
+const addList = (state: UserState, action: UserAction) => {};
+
 const signUp = (state: UserState, action: UserAction) => {
   state.data = { ...state.data, ...action.payload };
 };
@@ -45,6 +47,7 @@ const reducers = {
   setMovies,
   list,
   setList,
+  addList,
 };
 
 export default reducers;

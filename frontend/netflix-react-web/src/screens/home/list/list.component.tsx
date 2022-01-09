@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import { listBackend } from "../../../store/user/user.selectors";
 import { MovieEmpty } from "./list.styled";
+import ListModal from "./modal/modal.component";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,8 +14,11 @@ export default function MoviesList() {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: listFromBackEnd ? listFromBackEnd.length + 1 : 1,
-    slidesToScroll: listFromBackEnd ? listFromBackEnd.length + 1 : 1,
+    slidesToShow: Math.min(listFromBackEnd ? listFromBackEnd.length + 1 : 1, 6),
+    slidesToScroll: Math.min(
+      listFromBackEnd ? listFromBackEnd.length + 1 : 1,
+      6
+    ),
   };
   return (
     <div>
@@ -26,21 +30,7 @@ export default function MoviesList() {
             </div>
           ))}
         <div>
-          <MovieEmpty>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              <AddCircleOutlineIcon
-                style={{ height: "40px", width: "40px", flexBasis: "100%" }}
-              />
-              <h5>Adicionar filme</h5>
-            </div>
-          </MovieEmpty>
+          <ListModal />
         </div>
       </Slider>
     </div>
