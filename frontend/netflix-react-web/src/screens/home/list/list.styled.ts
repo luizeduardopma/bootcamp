@@ -33,3 +33,9 @@ export const MovieEmptyRemove = styled.div`
 export const Logo = styled.img`
   height: 40px;
 `;
+
+export const ImgPointer = styled.img`
+  &:hover {
+    cursor: pointer;
+  }
+`;

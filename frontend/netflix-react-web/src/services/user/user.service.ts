@@ -29,5 +29,13 @@ export function userService() {
       headers: { authorization: accessToken },
     });
 
-  return { getMovies, getList, addList, removeList };
+  const getMovie = (
+    accessToken: Session["accessToken"],
+    movieId: string
+  ): Promise<GetList> =>
+    axiosInstance.get(`movies/id/${movieId}`, {
+      headers: { authorization: accessToken },
+    });
+
+  return { getMovies, getList, addList, removeList, getMovie };
 }

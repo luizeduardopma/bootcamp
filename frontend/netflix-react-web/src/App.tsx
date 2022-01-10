@@ -11,6 +11,7 @@ import theme from "./themes/main/theme";
 import { Provider } from "react-redux";
 import store from "./store/store/store";
 import { HomePath } from "./screens/home/home.types";
+import Movie from "./screens/movie/movie.screen";
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
             path={"/"}
           />
           <Route path={LoginPath} element={<Login />} />
+          <Route
+            path="movie/:name/:id"
+            element={
+              <UserGuard>
+                <Movie />
+              </UserGuard>
+            }
+          />
           <Route
             path={HomePath}
             element={

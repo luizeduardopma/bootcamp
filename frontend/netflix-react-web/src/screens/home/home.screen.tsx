@@ -13,7 +13,7 @@ export default function Home() {
         <Grid container justifyContent={"center"}>
           <div style={{ maxWidth: "70vw" }}>
             <GridNavbar style={{ marginBottom: "50px" }} item xs={12}>
-              <Navbar />
+              <Navbar home />
             </GridNavbar>
             <Grid item xs={12}>
               <Carousel />

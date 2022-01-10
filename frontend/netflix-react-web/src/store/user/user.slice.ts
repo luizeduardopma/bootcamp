@@ -17,6 +17,18 @@ const initialState: UserState = {
     totalPages: 0,
     data: [],
   },
+  movie: {
+    _id: "",
+    name: "",
+    category: "",
+    description: "",
+    media_type: "",
+    poster: "",
+    backdrop: "",
+    __v: 0,
+    createdAt: "",
+    updatedAt: "",
+  },
   list: null || [Object],
 };
 

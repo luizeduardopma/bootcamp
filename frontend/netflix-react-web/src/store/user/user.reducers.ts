@@ -3,19 +3,29 @@ import {
   UserAction,
   SetErrorAction,
   SetSettingsAction,
+  MovieAction,
   MoviesAction,
   ListAction,
+  ListRemoveAction,
+  ListAddAction,
+  GetMovieAction,
 } from "./user.types";
 
 const login = (state: UserState, action: UserAction) => {};
 
 const movies = () => {};
 
+const getMovie = (state: UserState, action: GetMovieAction) => {};
+
+const setMovie = (state: UserState, action: MovieAction) => {
+  state.movie = action.payload;
+};
+
 const list = () => {};
 
-const addList = (state: UserState, action: UserAction) => {};
+const addList = (state: UserState, action: ListAddAction) => {};
 
-const removeList = (state: UserState, action: UserAction) => {};
+const removeList = (state: UserState, action: ListRemoveAction) => {};
 
 const signUp = (state: UserState, action: UserAction) => {
   state.data = { ...state.data, ...action.payload };
@@ -45,7 +55,9 @@ const reducers = {
   setError,
   setSettings,
   signUp,
+  getMovie,
   movies,
+  setMovie,
   setMovies,
   list,
   setList,
