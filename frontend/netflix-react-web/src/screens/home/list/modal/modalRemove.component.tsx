@@ -6,11 +6,12 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Modal from "@mui/material/Modal";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { MovieEmpty } from "../list.styled";
+import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import { MovieEmptyRemove } from "../list.styled";
 import { moviesBackend } from "../../../../store/user/user.selectors";
 import MovieIcon from "@mui/icons-material/Movie";
 import { userActions } from "../../../../store/user/user.slice";
+import { listBackend } from "../../../../store/user/user.selectors";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,7 +25,7 @@ const style = {
   p: 4,
 };
 
-export default function ListModal() {
+export default function ListModalRemove() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<any>({
     name: "",
@@ -36,16 +37,16 @@ export default function ListModal() {
   const handleClose = () => setOpen(false);
 
   const handleAddMovie = () => {
-    dispatch(userActions.addList(value._id));
+    dispatch(userActions.removeList(value._id));
 
     setValue({ name: "" });
   };
 
-  const moviesFromBackEnd = useSelector(moviesBackend);
+  const listFromBackEnd = useSelector(listBackend);
 
   return (
     <div>
-      <MovieEmpty onClick={handleOpen}>
+      <MovieEmptyRemove onClick={handleOpen}>
         <div
           style={{
             display: "flex",
@@ -54,12 +55,12 @@ export default function ListModal() {
             flexWrap: "wrap",
           }}
         >
-          <AddCircleOutlineIcon
+          <DoDisturbIcon
             style={{ height: "40px", width: "40px", flexBasis: "100%" }}
           />
-          <h5>Adicionar filme</h5>
+          <h5>Remover filme</h5>
         </div>
-      </MovieEmpty>
+      </MovieEmptyRemove>
 
       <Modal
         open={open}
@@ -72,7 +73,7 @@ export default function ListModal() {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={moviesFromBackEnd.data || []}
+              options={listFromBackEnd || []}
               getOptionLabel={(option: { [name: string]: any }) => option.name}
               sx={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label="Movie" />}
@@ -85,11 +86,11 @@ export default function ListModal() {
             <Button
               style={{ marginLeft: "10px" }}
               variant="outlined"
-              color="success"
+              color="error"
               endIcon={<MovieIcon />}
               onClick={handleAddMovie}
             >
-              Adicionar
+              Remover
             </Button>
           </div>
           {value && value.name && (

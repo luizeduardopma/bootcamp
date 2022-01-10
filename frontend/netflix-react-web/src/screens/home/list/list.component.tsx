@@ -2,8 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import { listBackend } from "../../../store/user/user.selectors";
-import { MovieEmpty } from "./list.styled";
-import ListModal from "./modal/modal.component";
+import ListModalAdd from "./modal/modalAdd.component";
+import ListModalRemove from "./modal/modalRemove.component";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -30,7 +30,10 @@ export default function MoviesList() {
             </div>
           ))}
         <div>
-          <ListModal />
+          <ListModalAdd />
+        </div>
+        <div>
+          <ListModalRemove />
         </div>
       </Slider>
     </div>

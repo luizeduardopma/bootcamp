@@ -140,6 +140,34 @@ function* watchAddList() {
   yield takeEvery("user/addList", addListSaga);
 }
 
+export function* removeListSaga(props: any): any {
+  try {
+    const movieId = props.payload;
+    console.log(props.payload, "payload");
+    const accessToken = localStorage.getItem(AccessTokenStorageKey);
+    if (accessToken) {
+      console.log(props.payload, "payload");
+      //@ts-ignore
+      const { data } = yield call(
+        userService().removeList,
+        accessToken,
+        movieId
+      );
+      console.log(data, "dataList");
+      const List = yield call(userService().getList, accessToken);
+      console.log(List, "ListList");
+      yield put(userActions.setList(List.data.result));
+    }
+  } catch (error) {
+    //@ts-ignore
+    yield put(userActions.setError(error.response.data.message));
+  }
+}
+
+function* watchRemoveList() {
+  yield takeEvery("user/removeList", removeListSaga);
+}
+
 export default function* userSaga() {
   yield all([
     watchGetMovies(),
@@ -147,6 +175,7 @@ export default function* userSaga() {
     watchSignUp(),
     watchGetList(),
     watchAddList(),
+    watchRemoveList(),
     loginByToken(),
   ]);
 }

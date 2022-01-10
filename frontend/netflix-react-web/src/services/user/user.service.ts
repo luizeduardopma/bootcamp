@@ -21,5 +21,13 @@ export function userService() {
       }
     );
 
-  return { getMovies, getList, addList };
+  const removeList = (
+    accessToken: Session["accessToken"],
+    movieId: string
+  ): Promise<GetList> =>
+    axiosInstance.delete(`list/remove/${movieId}`, {
+      headers: { authorization: accessToken },
+    });
+
+  return { getMovies, getList, addList, removeList };
 }

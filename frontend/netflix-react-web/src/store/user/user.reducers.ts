@@ -15,6 +15,8 @@ const list = () => {};
 
 const addList = (state: UserState, action: UserAction) => {};
 
+const removeList = (state: UserState, action: UserAction) => {};
+
 const signUp = (state: UserState, action: UserAction) => {
   state.data = { ...state.data, ...action.payload };
 };
@@ -48,6 +50,7 @@ const reducers = {
   list,
   setList,
   addList,
+  removeList,
 };
 
 export default reducers;
