@@ -3,7 +3,7 @@ import InputText from "../../../../components/inputs/input-text/input-text.compo
 import Button from "../../../../components/buttons/button/button.component";
 import * as yup from "yup";
 import { ErrorMessage } from "./form.types";
-import { ErrorDescription } from "./form.styled";
+import { ErrorDescription, SuccessDescription } from "./form.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../../store/user/user.slice";
 import { useLocation, useNavigate } from "react-router";
@@ -13,12 +13,15 @@ import {
   errorMessageRedux,
 } from "../../../../store/user/user.selectors";
 import { HomePath } from "../../../home/home.types";
+import { setInterval } from "timers/promises";
 
 const errorInitial = "";
+const successInitial = "";
 
 export default function Form({ setIsloginPage }: any) {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState(errorInitial);
+  const [success, setSuccess] = useState(successInitial);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +38,10 @@ export default function Form({ setIsloginPage }: any) {
   }, [isUserAuthenticated]);
 
   useEffect(() => {
-    if (errorMessageFromRedux !== "") {
+    if (errorMessageFromRedux === "Success") {
+      setSuccess("Usuário criado com sucesso");
+      setTimeout(() => setSuccess(""), 4000);
+    } else if (errorMessageFromRedux !== "") {
       setError(errorMessageFromRedux);
     }
   }, [errorMessageFromRedux, error]);
@@ -108,6 +114,7 @@ export default function Form({ setIsloginPage }: any) {
         onClick={handleClick}
       />
       <ErrorDescription>{error}</ErrorDescription>
+      <SuccessDescription>{success}</SuccessDescription>
       <Button
         disabled={isUserLoading ? true : false}
         primary

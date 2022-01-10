@@ -6,3 +6,9 @@ export const ErrorDescription = styled.p`
   font-weight: bold;
   font-size: 13px;
 `;
+export const SuccessDescription = styled.p`
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  font-size: 13px;
+`;

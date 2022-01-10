@@ -19,11 +19,14 @@ export default function MoviesList() {
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(listFromBackEnd ? listFromBackEnd.length + 1 : 1, 6),
-    slidesToScroll: Math.min(
-      listFromBackEnd ? listFromBackEnd.length + 1 : 1,
-      6
-    ),
+    slidesToShow:
+      listFromBackEnd && listFromBackEnd.length > 0
+        ? Math.min(listFromBackEnd && listFromBackEnd.length + 2, 6)
+        : 1,
+    slidesToScroll:
+      listFromBackEnd && listFromBackEnd.length > 0
+        ? Math.min(listFromBackEnd && listFromBackEnd.length + 2, 6)
+        : 1,
   };
 
   const handleClick = (movie: any) => (e: any) => {
@@ -45,9 +48,11 @@ export default function MoviesList() {
         <div>
           <ListModalAdd />
         </div>
-        <div>
-          <ListModalRemove />
-        </div>
+        {listFromBackEnd && listFromBackEnd.length > 0 && (
+          <div>
+            <ListModalRemove />
+          </div>
+        )}
       </Slider>
     </div>
   );

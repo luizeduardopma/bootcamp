@@ -43,8 +43,7 @@ export function* signUp(props: any) {
       email,
       password,
     });
-    console.log(props, "props");
-    console.log(data, "data");
+    yield put(userActions.setError("Success"));
   } catch (error) {
     console.log(error);
     //@ts-ignore

@@ -14,6 +14,7 @@ import {
 } from "../../../../store/user/user.selectors";
 
 const errorInitial = "";
+const sucessInitial = "";
 
 export default function FormSignUp({ setIsloginPage }: any) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
