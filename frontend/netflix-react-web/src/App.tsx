@@ -19,14 +19,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Routes>
-          <Route
-            element={
-              <UserGuard>
-                <Home />
-              </UserGuard>
-            }
-            path={"/"}
-          />
+          <Route element={<Login />} path={"/"} />
           <Route path={LoginPath} element={<Login />} />
           <Route
             path="movie/:name/:id"

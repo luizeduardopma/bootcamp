@@ -3,6 +3,19 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+const replaceHashPath = () => {
+  const history = createBrowserHistory();
+  const hash = history.location.hash;
+  if (hash) {
+    const path = hash.replace(/^#/, "");
+    if (path) {
+      history.replace(path);
+    }
+  }
+};
+replaceHashPath();
 
 ReactDOM.render(
   <React.StrictMode>
