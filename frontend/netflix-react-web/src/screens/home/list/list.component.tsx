@@ -30,7 +30,7 @@ export default function MoviesList() {
   };
 
   const handleClick = (movie: any) => (e: any) => {
-    navigate(`movie/${movie.name}/${movie._id}`);
+    navigate(`/movie/${movie.name}/${movie._id}`, { replace: true });
   };
 
   return (
