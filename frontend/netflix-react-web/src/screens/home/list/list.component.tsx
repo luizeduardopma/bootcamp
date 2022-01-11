@@ -15,7 +15,6 @@ export default function MoviesList() {
   const listFromBackEnd = useSelector(listBackend);
   const navigate = useNavigate();
 
-  console.log(listFromBackEnd, "listFromBackEnd");
   const settings = {
     infinite: true,
     speed: 500,
