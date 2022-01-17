@@ -1,7 +1,6 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Grid } from "@mui/material";
-import { GridNavbar } from "./movie.styled";
 import Navbar from "../home/navbar/navbar.component";
 import { listBackend, movieBackend } from "../../store/user/user.selectors";
 import { userActions } from "../../store/user/user.slice";
@@ -27,7 +26,6 @@ export default function Movie() {
         (mov: any) => mov._id === movieFromBackend._id
       );
       setIsAddedToList(!!result);
-      console.log(result, "result22");
     }
   }, [movieFromBackend, listFromBackend]);
 

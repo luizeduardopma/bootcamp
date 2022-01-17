@@ -1,4 +1,4 @@
-import react, { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import InputText from "../../../../components/inputs/input-text/input-text.component";
 import Button from "../../../../components/buttons/button/button.component";
 import * as yup from "yup";
@@ -6,15 +6,14 @@ import { ErrorMessage } from "../form/form.types";
 import { ErrorDescription } from "./form.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../../store/user/user.slice";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import {
-  isAuthenticated,
   isLoading,
   errorMessageRedux,
 } from "../../../../store/user/user.selectors";
+import { HomePath } from "../../../home/home.types";
 
 const errorInitial = "";
-const sucessInitial = "";
 
 export default function FormSignUp({ setIsloginPage }: any) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -22,9 +21,7 @@ export default function FormSignUp({ setIsloginPage }: any) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const isUserLoading = useSelector(isLoading);
-  const isUserAuthenticated = useSelector(isAuthenticated);
   const errorMessageFromRedux = useSelector(errorMessageRedux);
 
   const buttonDescription = useMemo(
@@ -74,12 +71,15 @@ export default function FormSignUp({ setIsloginPage }: any) {
       setError(error.errors[0]);
       return false;
     }
-  }, [data, setError]);
+  }, [data, setError, resetError]);
 
   const onSubmit = useCallback(async () => {
     if (await validation()) {
       await dispatch(userActions.signUp(data));
-      !isUserLoading && setIsloginPage(true);
+      if (!isUserLoading) {
+        navigate(HomePath);
+      }
+      setIsloginPage(true);
     }
   }, [validation, data]);
 
@@ -110,12 +110,13 @@ export default function FormSignUp({ setIsloginPage }: any) {
       <Button
         disabled={isUserLoading ? true : false}
         primary
-        onClick={isUserLoading ? "" : onSubmit}
+        onClick={isUserLoading ? null : onSubmit}
       >
         {buttonDescription}
       </Button>
       <a
         onClick={() => setIsloginPage(true)}
+        href="/#"
         style={{ color: "red", cursor: "pointer" }}
       >
         Voltar ao login

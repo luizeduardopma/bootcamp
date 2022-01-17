@@ -38,11 +38,26 @@ export function* signUp(props: any) {
   try {
     yield put(userActions.setSettings({ isLoading: true }));
     const { name, email, password } = props.payload;
-    const { data }: PostSessionNew = yield call(sessionService().postUserNew, {
+    yield call(sessionService().postUserNew, {
       name,
       email,
       password,
     });
+    const {
+      data: { user, accessToken },
+    }: PostSessionNew = yield call(sessionService().postSessionNew, {
+      email,
+      password,
+    });
+    localStorage.setItem(AccessTokenStorageKey, accessToken);
+    yield put(userActions.setData({ ...user }));
+    // @ts-ignore
+    const dataMovies = yield call(userService().getMovies);
+    console.log(dataMovies, "datamovies");
+    yield put(userActions.setMovies(dataMovies.data));
+    const { data: result } = yield call(userService().getList, accessToken);
+    console.log(result.result, "MyList");
+    yield put(userActions.setList(result.result));
     yield put(userActions.setError("Success"));
   } catch (error) {
     console.log(error);
